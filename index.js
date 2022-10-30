@@ -1,148 +1,35 @@
-// Global require's
+// TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateMarkdown = require('./src/generateMarkdown.js')
+const generateMarkdown = require('./utils/generateMarkdown');
 
-// Array of questions to ask the user
-const questions = [
-    // Project name
-    {
-        type: 'input',
-        name: 'title',
-        message: 'What is the title of the project? (Required)',
-        validate: titleInput => {
-            if (titleInput) {
-                return true;
-            } else {
-                console.log('You need to enter a title to continue!');
-                return false;
-            }
-        }
-    },
-    // Description of project
-    {
-        type: 'input',
-        name: 'description',
-        message: 'Provide a description of the project (Required)',
-        validate: descriptionInput => {
-            if (descriptionInput) {
-                return true;
-            } else {
-                console.log('You need to provide a project description!');
-                return false;
-            }
-        }
-    },
-    // Installation Instructions
-    {
-        type: 'input',
-        name: 'installation',
-        message: 'How do you install your project? (Required)',
-        validate: installationInput => {
-            if (installationInput) {
-                return true;
-            } else {
-                console.log('You need to provide installation info to continue!');
-                return false;
-            }
-        }
-    },
-    // Usage Information
-    {
-        type: 'input',
-        name: 'usage',
-        message: 'How do you use this project? (Required)',
-        validate: usageInput => {
-            if (usageInput) {
-                return true;
-            } else {
-                console.log('You need to provide information on how to use project!');
-                return false;
-            }
-        }
-    },
-    // Contribution Guidlines
-    {
-        type: 'input',
-        name: 'contribution',
-        message: 'How should people contribute to this project? (Required)',
-        validate: contributionInput => {
-            if (contributionInput) {
-                return true;
-            } else {
-                console.log('You need to provide information on how to contribute to the project!');
-                return false;
-            }
-        }
-    },
-    // Test Instructions 
-    {
-        type: 'input',
-        name: 'testing',
-        message: 'How do you test this project? (Required)',
-        validate: testingInput => {
-            if (testingInput) {
-                return true;
-            } else {
-                console.log('You need to describe how to test this project!');
-                return false;
-            }
-        }
-    },
-    // License Options
-    {
-        type: 'checkbox',
-        name: 'licensing',
-        message: 'Choose a license for your project (Required)',
-        choices: ['Apache', 'MIT', 'Mozilla-Public', 'GNU-General-Public', 'Common-Development-and Distribution', 'None'],
-        validate: licensingInput => {
-            if (licensingInput) {
-                return true;
-            } else {
-                console.log('You must pick a license for the project!');
-                return false;
-            }
-        }
-    },
-    // Github Username
-    {
-        type: 'input',
-        name: 'github',
-        message: 'Enter your GitHub Username (Required)',
-        validate: githubInput => {
-            if (githubInput) {
-                return true;
-            } else {
-                console.log('Please enter your GitHub username!');
-                return false;
-            }
-        }
-    },
-    // Email Address
-    {
-        type: 'input',
-        name: 'email',
-        message: 'Would you like to include your email?',
-    },
-];
+// TODO: Create an array of questions for user input
+function userInput(){
+    return inquirer.prompt([
+    {name: 'license', message: 'Select kind of license for this application:', type: 'list', 
+    choices: ["Academic Free License v3.0", "Apache license 2.0", "Artistic license 2.0", "Boost Software License 1.0", "BSD 2-clause license", "BSD 3-clause license", "Creative Commons Zero v1.0 Universal", "Creative Commons Attribution 4.0", "Creative Commons Attribution Share Alike 4.0", "Do What The Fuck You Want To Public License", "Educational Community License v2.0", "Eclipse Public License 1.0", "Eclipse Public License 2.0", "European Union Public License 1.1", "GNU Affero General Public License v3.0", "GNU General Public License v2.0", "GNU General Public License v3.0",  "GNU Lesser General Public License v2.1", "GNU Lesser General Public License v3.0", "ISC", "LaTeX Project Public License v1.3c", "Microsoft Public License",  "MIT", "Mozilla Public License 2.0", "Open Software License 3.0", "SIL Open Font License 1.1", "University of Illinois/NCSA Open Source License", "The Unlicense", "zLib License"]},
+    {name: 'title', message: 'What is the title of this application?', type: 'input'},
+    {name: 'description', message: 'What does this application do?', type: 'input'},
+    {name: 'install', message: 'How do I install this application?', type: 'input'},
+    {name: 'usage', message: 'How do I use this application?', type: 'input'},
+    {name: 'contributing', message: 'How do I contribute to this application?', type: 'input'},
+    {name: 'testing', message: 'How do I test this application?', type: 'input'},
+    {name: 'username', message: 'What is your Github username?', type: 'input'},
+    {name: 'email', message: 'What is your e-mail?', type: 'input'},
+    {name: 'fileName', message: 'What do you want to call this readme?', type: 'input'},
+])};
 
-// Function to write README file
+// TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, (err) => {
-        if (err)
-            throw err;
-        console.log('Success! Information transferred to the README!')
-    });
-};
+    fs.appendFile(`${fileName}.md`, data, 
+    (err) => err ? console.error(err) : console.log(`${fileName}.md has been generated.`))
+}
 
-// Function to initialize app
-function init() {
-    inquirer.prompt(questions)
-    .then(function (userInput) {
-        console.log(userInput)
-        writeToFile("README.md", generateMarkdown(userInput));
-    });
-};
+// TODO: Create a function to initialize app
+async function init() {
+    let answers = await userInput();
+    writeToFile((answers.fileName),(generateMarkdown(answers)));
+}
 
 // Function call to initialize app
 init();

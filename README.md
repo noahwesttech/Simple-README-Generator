@@ -1,17 +1,26 @@
-# Professional README Generator
+# Homework Week 9 README Generator
+  ## Badges
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Description
+  ## Table of Contents
+  * [License](#license)
+  * [Description](#description)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Tests](#tests)
 
-This is a command line interface application which creates a README file for your application repositories. This will allow people to understand how your app works, how to install it, and how other developers can contribute to your project. This README.md is being created via this system.
+  ## License
+  Read more about MIT here:
+  [MIT](https://opensource.org/licenses/MIT)
 
-## Questions
-      
-  _For further questions:_
+  ## Description
+  This application generates a comprehensive README file based on user input.  
 
-  If you have any questions, or additional feedback, please feel free to email me and I will respond as soon as possible.
-  
-  _Contact Info:_
+  ## Installation
+  Clone the repository. 
 
-  GitHub: [NoahWestTech](https://github.com/noahwesttech)
+  ## Usage
+  To use, simply open the index in node and follow the prompts. 
 
-  Email: [NoahWestberry@Gmail.com](mailto:noahwestberry@gmail.com)
+  ## Tests
+  Simply use the application.
