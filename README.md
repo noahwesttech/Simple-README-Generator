@@ -21,6 +21,3 @@
 
   ## Usage
   To use, simply open the index in node and follow the prompts. 
-
-  ## Tests
-  Simply use the application.
